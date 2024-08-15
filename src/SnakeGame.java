@@ -27,5 +27,14 @@ public class SnakeGame extends JPanel {
         snakeHead = new Tile(5, 5);
     }
 
-    
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        draw(g);
+    }
+
+    public void draw(Graphics g) {
+        // Snake
+        g.setColor(Color.green);
+        g.fillRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize);
+    }
 }
