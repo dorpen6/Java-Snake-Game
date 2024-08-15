@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 
@@ -20,6 +21,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     // Snake
     Tile snakeHead;
+    ArrayList<Tile> snakeBody;
 
     // Food
     Tile food;
@@ -39,6 +41,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         setFocusable(true);
 
         snakeHead = new Tile(5, 5);
+        snakeBody = new ArrayList<Tile>();
 
         food = new Tile(10, 10);
         random = new Random();
@@ -74,6 +77,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         // Snake
         g.setColor(Color.green);
         g.fillRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize);
+
+        // Snake Body
+        for (int i = 0; i < snakeBody.size(); i++) {
+            Tile snakePart = snakeBody.get(i);
+            g.fillRect(snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize);
+        }
     }
 
     public void placeFood() {
@@ -81,7 +90,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         food.y = random.nextInt(boardHeight / tileSize); // 600/25 = 24 (0:24)
     }
 
+    public boolean collision(Tile tile1, Tile tile2) {
+        return tile1.x == tile2.x && tile1.y == tile2.y;
+    }
+
     public void move() {
+
+        // eat food
+        if (collision(snakeHead, food)) {
+            snakeBody.add(new Tile(food.x, food.y));
+            placeFood();
+        }
+
         // Snake Head
         snakeHead.x += velocityX;
         snakeHead.y += velocityY;
