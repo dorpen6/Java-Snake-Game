@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 
 public class App {
     public static void main(String[] args) throws Exception {
+
+
         int boardWidth = 600;
         int boardHeight = boardWidth;
 
@@ -17,5 +19,6 @@ public class App {
         SnakeGame snakeGame = new SnakeGame(boardWidth, boardHeight);
         frame.add(snakeGame);
         frame.pack(); // Place the JPanel inside the Window (Perfectly)
+
     }
 }
